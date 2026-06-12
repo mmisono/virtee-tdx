@@ -40,7 +40,8 @@ fn launch() {
     launcher.init_vm(&caps, cpuid).unwrap();
 
     // get tdvf sections
-    let mut firmware = std::fs::File::open("/usr/share/edk2/ovmf/OVMF.inteltdx.fd").unwrap();
+    let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/data/OVMF.inteltdx.fd");
+    let mut firmware = std::fs::File::open(path).unwrap();
     let sections = tdvf::parse_sections(&mut firmware).unwrap();
     let hob_section = tdvf::get_hob_section(&sections).unwrap();
 
